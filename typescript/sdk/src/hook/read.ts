@@ -25,7 +25,7 @@ import {
 } from '@hyperlane-xyz/utils';
 
 import { MultiProvider } from '../providers/MultiProvider.js';
-import { ChainName } from '../types.js';
+import { ChainNameOrId } from '../types.js';
 
 import {
   AggregationHookConfig,
@@ -42,7 +42,7 @@ import {
   RoutingHookConfig,
 } from './types.js';
 
-interface HookReader {
+export interface HookReader {
   deriveHookConfig(address: Address): Promise<WithAddress<HookConfig>>;
   deriveMerkleTreeConfig(
     address: Address,
@@ -74,7 +74,7 @@ export class EvmHookReader implements HookReader {
 
   constructor(
     protected readonly multiProvider: MultiProvider,
-    chain: ChainName,
+    chain: ChainNameOrId,
     protected readonly concurrency: number = 20,
   ) {
     this.provider = this.multiProvider.getProvider(chain);

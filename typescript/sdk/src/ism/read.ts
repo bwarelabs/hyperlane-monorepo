@@ -20,7 +20,7 @@ import {
 } from '@hyperlane-xyz/utils';
 
 import { MultiProvider } from '../providers/MultiProvider.js';
-import { ChainName } from '../types.js';
+import { ChainNameOrId } from '../types.js';
 
 import {
   AggregationIsmConfig,
@@ -45,7 +45,7 @@ export type DerivedIsmConfigWithAddress = WithAddress<
   Exclude<IsmConfig, Address>
 >;
 
-interface IsmReader {
+export interface IsmReader {
   deriveIsmConfig(address: Address): Promise<DerivedIsmConfigWithAddress>;
   deriveRoutingConfig(address: Address): Promise<WithAddress<RoutingIsmConfig>>;
   deriveAggregationConfig(
@@ -63,7 +63,7 @@ export class EvmIsmReader implements IsmReader {
 
   constructor(
     protected readonly multiProvider: MultiProvider,
-    chain: ChainName,
+    chain: ChainNameOrId,
     protected readonly concurrency: number = 20,
   ) {
     this.provider = this.multiProvider.getProvider(chain);

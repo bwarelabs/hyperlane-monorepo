@@ -48,6 +48,7 @@ import {
   logRed,
 } from '../logger.js';
 import { runMultiChainSelectionStep } from '../utils/chains.js';
+import { ENV } from '../utils/env.js';
 import {
   prepNewArtifactsFiles,
   runFileSelectionStep,
@@ -280,7 +281,8 @@ async function executeDeploy({
     { filename: 'agent-config', description: 'Agent configs' },
   ]);
 
-  const owner = await signer.getAddress();
+  const owner = ENV.HYP_OWNER_ADDRESS || (await signer.getAddress());
+  logBlue(`Owner of deployed contracts: ${owner}`);
   const mergedContractAddrs = getMergedContractAddresses(artifacts, chains);
 
   // 1. Deploy ISM factories to all deployable chains that don't have them.

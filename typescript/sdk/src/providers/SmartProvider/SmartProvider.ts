@@ -29,7 +29,7 @@ import {
 
 const DEFAULT_MAX_RETRIES = 1;
 const DEFAULT_BASE_RETRY_DELAY_MS = 250; // 0.25 seconds
-const DEFAULT_STAGGER_DELAY_MS = 1000; // 1 seconds
+const DEFAULT_STAGGER_DELAY_MS = 10000; // 10 seconds
 
 type HyperlaneProvider = HyperlaneEtherscanProvider | HyperlaneJsonRpcProvider;
 
@@ -225,6 +225,12 @@ export class HyperlaneSmartProvider
           this.options?.fallbackStaggerMs || DEFAULT_STAGGER_DELAY_MS,
         );
         const result = await Promise.race([resultPromise, timeoutPromise]);
+
+        this.logger.debug(
+          `RPC method: ${method}, params: ${JSON.stringify(
+            params,
+          )}, status: ${JSON.stringify(result)}`,
+        );
 
         if (result.status === ProviderStatus.Success) {
           return result.value;

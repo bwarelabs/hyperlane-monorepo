@@ -35,7 +35,7 @@ export class HyperlaneCoreDeployer extends HyperlaneDeployer<
   ) {
     super(multiProvider, coreFactories, {
       logger: rootLogger.child({ module: 'CoreDeployer' }),
-      chainTimeoutMs: 1000 * 60 * 10, // 10 minutes
+      chainTimeoutMs: 1000 * 60 * 60, // 60 minutes
       ismFactory,
       contractVerifier,
     });
